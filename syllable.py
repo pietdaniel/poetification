@@ -37,4 +37,3 @@ def testNsyl():
 def testline_syl():
 	line = "this has six sylables"
 	print line_syl(line)==6
-
