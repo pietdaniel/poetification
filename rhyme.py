@@ -8,9 +8,3 @@ def rhyme(inp, level):
 	for (word, syllable) in syllables:
 		rhymes += [word for word, pron in entries if pron[-level:] == syllable[-level:]]
 	return set(rhymes)
-
-print "word?"
-word = raw_input()
-print "level?"
-level = input()
-print rhyme(word, level)
