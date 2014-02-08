@@ -1,11 +1,6 @@
 import  os
 from twython import *
 
-# 'Pw0j9T6hW0OGFTwppSmlQ',
-# 'BmwCFHwC6OTuWc2aPpFtLFxGb6XKCZtd9olQsPa3E',
-# '817931958-CkNG0onLXBDeNwngnbtXOVyvA25sQv2uFL7SdoAw',
-# 'qttMJ4uqhSRI25CBtnm9VTqlqTZicwTSVgpd0KezdTXgc'
-
 class TwitterFeed(object):
     def __init__(self):
         APP_KEY      = os.environ['P_APP_KEY']
