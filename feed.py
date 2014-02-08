@@ -12,5 +12,4 @@ class TwitterFeed(object):
 
 
     def tweets(self,user, tlimit=None):
-        return [tt['text'] for tt in self.t.get_user_timeline(screen_name=user,
-                                                              limit=tlimit)]
+        return [tt['text'] for tt in self.t.get_user_timeline(screen_name=user)]
