@@ -1,1 +1,4 @@
 *.pyc
+p_env.sh
+*.sqlite3
+poetification/static
