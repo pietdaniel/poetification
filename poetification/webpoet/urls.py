@@ -7,5 +7,6 @@ admin.autodiscover()
 urlpatterns =\
     patterns('',
              url(r'^$', views.index, name='index'),
-             url(r'^home/$', views.home, name='home'))
+             url(r'^home/$', views.home, name='home'),
+     		 url(r'', include('social_auth.urls')))
              # url(r'^new/$', views.new, name='new'))
