@@ -20,3 +20,9 @@ twitter oauth dance
 flask
 
 frontend?
+
+
+pip install flask
+pip install nltk
+python nltk.py
+
