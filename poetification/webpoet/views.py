@@ -14,7 +14,7 @@ def home(request):
     context = RequestContext(request, {'poems' : poems})
     return HttpResponse(template.render(context))
 
-def new(request):
-    template = loader.get_template('webpoet/new.html')
-    context = RequestContext(request, {})
-    return HttpResponse(template.render(context))
+# def new(request):
+#     template = loader.get_template('webpoet/new.html')
+#     context = RequestContext(request, {})
+#     return HttpResponse(template.render(context))

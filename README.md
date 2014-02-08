@@ -17,12 +17,18 @@ facebook oauth dance
 
 twitter oauth dance
 
-flask
-
-frontend?
+frontend? twitter bootstrap
 
 
-pip install flask
+pip isntall django
 pip install nltk
+pip install django-social-auth
 python nltk.py
+
+
+
+https://github.com/omab/django-social-auth
+OpenId support depends on python-openid
+OAuth support depends on python-oauth2
+
 

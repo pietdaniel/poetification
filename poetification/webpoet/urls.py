@@ -7,5 +7,5 @@ admin.autodiscover()
 urlpatterns =\
     patterns('',
              url(r'^$', views.index, name='index'),
-             url(r'^home/$', views.home, name='home'),
-             url(r'^new/$', views.new, name='new'))
+             url(r'^home/$', views.home, name='home'))
+             # url(r'^new/$', views.new, name='new'))

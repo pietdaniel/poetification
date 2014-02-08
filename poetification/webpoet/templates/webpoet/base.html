@@ -25,43 +25,44 @@
     <script src="{% static "webpoet/js/flatui-radio.js"%}"></script>
     <script src="{% static "webpoet/js/jquery.tagsinput.js"%}"></script>
     <script src="{% static "webpoet/js/jquery.placeholder.js"%}"></script>
+    <script src="{% static "webpoet/js/webpoet.js"%}"></script>
     {% endblock %}
   </head>
 
   <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <!-- <nav class="navbar navbar-default" role="navigation"> -->
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" >
+      <!-- <div class="navbar-header"> -->
+        <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" >
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/home">webpoet</a>
-      </div>
+        </button> -->
+        <!-- <a class="navbar-brand" href="/home">webpoet</a> -->
+      <!-- </div> -->
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="{% active request 'home' %}"><a href="/home">Home</a></li>
+      <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+        <!-- <ul class="nav navbar-nav"> -->
+          <!-- <li class="{% active request 'home' %}"><a href="/home">Home</a></li> -->
           <!-- <li class="{% active request 'poems' %}"><a href="/poems">Poems</a></li> -->
-          <li class="{% active request 'new' %}"><a href="/new">New Poem!</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
+          <!-- <li class="{% active request 'new' %}"><a href="/new">New Poem!</a></li> -->
+        <!-- </ul> -->
+        <!-- <ul class="nav navbar-nav navbar-right">
           <li class="navbar-text">{{ request.user.name }}</li>
           <li><a href="/logout">Logout</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </nav>
+        </ul> -->
+      <!-- </div> --><!-- /.navbar-collapse -->
+    <!-- </nav> -->
     {% block content %}{% endblock %}
 
-    <div class="navbar-bottom">
-      <nav class="navbar navbar-default well" role="navigation">
-        <ul class="nav navbar-nav pull-left">
+    <!-- <div class="navbar-bottom"> -->
+      <!-- <nav class="navbar navbar-default well" role="navigation"> -->
+        <!-- <ul class="nav navbar-nav pull-left">
           <li class="navbar-text pull-left">&copy; YUH</li>
-        </ul>
-      </nav>
-    </div>
+        </ul> -->
+      <!-- </nav> -->
+    <!-- </div> -->
   </body>
 </html>
