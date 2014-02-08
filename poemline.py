@@ -6,7 +6,7 @@ from syllable import line_syl
 class PoemLine:
 	"""A line in the poem"""
 
-	RHYME_LEVEL = 4
+	RHYME_LEVEL = 1
 
 	def __init__(self, syl, family, rhymes, originalString, cleanString):
 		self.syl = syl
@@ -19,7 +19,7 @@ class PoemLine:
 		self.originalString = ""
 		self.cleanString = ""
 		self.syl = 0
-		self.family = ""
+		self.family = []
 		self.rhymes = {}
 
 	def create_poemline(self, string):

@@ -6,5 +6,10 @@ poem = Poem()
 
 print 'begin'
 poem.create_poem(raw_json)
-print 'end'
 
+for i in poem.syllables:
+	for z in poem.syllables[i]:
+		print z.originalString
+		print z.family
+
+print 'end'
