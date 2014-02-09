@@ -13,6 +13,33 @@ import json
 
 from twython import Twython
 
+def poem_helper_fb(result):
+	poems = []
+	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
+	if haiku:
+		poems.append(['Haiku', haiku])
+	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result['data']))
+	if dodoitsu:
+		poems.append(['Dodoitsu', dodoitsu])
+	if (haiku or dodoitsu):
+		return poems
+	else:
+		poems.append(['Sorry',['No poems were created']])
+		return poems
+
+def poem_helper_tw(result):
+	poems = []
+	haiku = PostList.getHaiku(PostList.fromTwitterTimeline(result))
+	if haiku:
+		poems.append(['Haiku', haiku])
+	dodoitsu = PostList.getDodoitsu(PostList.fromTwitterTimeline(result))
+	if dodoitsu:
+		poems.append(['Dodoitsu', dodoitsu])
+	if (haiku or dodoitsu):
+		return poems
+	else:
+		poems.append(['Sorry',['No poems where created']])
+		return poems
 
 def index(request):
     return redirect('home')
@@ -36,9 +63,10 @@ def fbauth(request):
     get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
-    poems = []
-    poems.append(PostList.getHaiku(PostList.fromFacebookFeed(result['data'])))
-    poems.append(PostList.getDodoitsu(PostList.fromFacebookFeed(result['data'])))
+    # poems = []
+    # poems.append(PostList.getHaiku(PostList.fromFacebookFeed(result['data'])))
+    # poems.append(PostList.getDodoitsu(PostList.fromFacebookFeed(result['data'])))
+    poems = poem_helper_fb(result)
     print poems
     template = loader.get_template('webpoet/poem.html')
     context = RequestContext(request, {'poems' : poems})
@@ -63,9 +91,12 @@ def twaccess(request, redirect_url="/home"):
     OAUTH_TOKEN = final_step['oauth_token']
     OAUTH_TOKEN_SECRET = final_step['oauth_token_secret']
     twitter = Twython(settings.TWITTER_CONSUMER_KEY,settings.TWITTER_CONSUMER_SECRET,OAUTH_TOKEN,OAUTH_TOKEN_SECRET)
-
-    poems = PostList.fromTwitterTimeline(twitter.get_user_timeline())
-    return HttpResponse(poems)
+    result = twitter.get_user_timeline()
+    # poems = PostList.fromTwitterTimeline(twitter.get_user_timeline())
+    poems = poem_helper_tw(result)
+    template = loader.get_template('webpoet/poem.html')
+    context = RequestContext(request, {'poems' : poems})
+    return HttpResponse(template.render(context))
 
 
     # STUB RETURN HTTPRESPONSE AND SHIT
