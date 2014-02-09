@@ -8,16 +8,33 @@ from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
+        self.lines = filter(lambda x: x, self.lines)
+        print self.lines
 
     @staticmethod
     def fromFacebookFeed(feed):
-        postlist = PostList([msg['message'] for msg in feed])
-        return postlist
+        feeddata = []
+        print feed
+        try:
+            feeddata = feed['paging']['data']
+        except:
+            print "error"
+            feeddata = feed['data']
+        finally:
+            postlist = []
+            for msg in feeddata:
+                try:
+                    print msg['message']
+                    postlist.append(msg['message'])
+                except: continue
+                
+            return PostList(postlist)
 
     @staticmethod
     def fromTwitterTimeline(timeline):
         postlist = PostList([tweet['text'] for tweet in timeline])
         return postlist
+
 
     @staticmethod
     def getHaiku(posts):
@@ -29,20 +46,35 @@ class PostList(models.Model):
         d = Dodoitsu()
         return d.makeDodoitsu(posts)
 
+    def getSonnet(posts):
+        h = Sonnet()
+        return h.pred(posts)
+
+    @property
+    def familyhash(self):
+        d = defaultdict(list)
+        for l in self.lines:
+            print "appending"
+            d[l.rw.rhyme_phoneme].append(l)
+
+        return d
+
+    # @property
+    # def cardinality_sets(self):
+    #     for l in self.lines
 
 class Line(models.Model):
     def __init__(self, phrase):
         self.text = phrase
-        # if (len(self.clean_text) == 0):
-        #     self.rw = ""
-        # else:
-        #     self.rw = RhymeWord.findWord(self.clean_text.split()[-1])
+        self.count = None
 
     @staticmethod
     def get_line(phrase):
         l = Line(phrase)
-        if (len(l.clean_text) > 1):
+        if (len(l.clean_text.split()) > 1):
             l.rw = RhymeWord.findWord(l.clean_text.split()[-1])
+            if not l.rw:
+                return None
             return l
         else:
             return None
@@ -57,11 +89,14 @@ class Line(models.Model):
     
     @property
     def syllables(self):
-        words = self.text.split()
-        count = 0
-        for word in words:
-            count += self.nsyl(word)
-        return count
+        # cache result
+        if not self.count:
+            words = self.text.split()
+            count = 0
+            for word in words:
+                count += self.nsyl(word)
+            self.count = count
+        return self.count
 
     @property
     def clean_text(self):
@@ -80,10 +115,6 @@ class RhymeWord(models.Model):
     class Meta:
         unique_together = ['word', 'syllables', 'rhyme_phoneme']
 
-
-    def rhymesWith(self, other):
-        return other.rhyme_phoneme == self.rhyme_phoneme
-    
 
     @staticmethod
     def findWord(word):

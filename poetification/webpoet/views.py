@@ -60,13 +60,17 @@ def fbauth(request):
     contents.close()
     re_find = re.search("(?<=\=)(.*?)(?=\&)", response)
     access_token = re_find.group(0)
-    get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
+    get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&limit=9999&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
     # poems = []
     # poems.append(PostList.getHaiku(PostList.fromFacebookFeed(result['data'])))
     # poems.append(PostList.getDodoitsu(PostList.fromFacebookFeed(result['data'])))
     poems = poem_helper_fb(result)
+# =======
+#     # print result
+#     poems = PostList.getSonnet(PostList.fromFacebookFeed(result))
+# >>>>>>> Stashed changes
     print poems
     template = loader.get_template('webpoet/poem.html')
     context = RequestContext(request, {'poems' : poems})

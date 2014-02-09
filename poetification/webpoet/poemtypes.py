@@ -5,34 +5,37 @@ import models as m
 #     def check_pattern(self, fams):
 
         
-
 class Pantoum:
-    pass
+    def pred(posts):
+        pass
+
+    # pattern = {["" : 0],
+    #            }
+    
 
 class Sonnet:
-    pattern = {"A" : 0,
-               "B" : 0,
-               "A" : 0,
-               "B" : 0,
-               "C" : 0,
-               "D" : 0,
-               "C" : 0,
-               "D" : 0,
-               "E" : 0,
-               "F" : 0,
-               "E" : 0,
-               "F" : 0,
-               "G" : 0,
-               "G" : 0}
+    
+    def pred(self, posts):
+        m = []
+        fhash = posts.familyhash.copy()
+        print fhash
+        # Needs 6 pairs of cardinality 2
+        for family in fhash.keys():
+            flist = fhash[family]
+            while len(flist) >= 2:
+                # take out two elements
+                m.append(flist.pop())
+                m.append(flist.pop())
 
-    def pred(families):
-        matches = {}
+        if len(m) < 14:
+            return False
 
-        for family in f.keys():
-            while len(f[family]) >= 2:
-                need -= 1
-                matches['A1'] = f[family][0]
-                matches['A2'] = f[family][1]
+        m[1], m[2] = m[2], m[1]
+        m[5], m[6] = m[6], m[5]
+        m[9], m[10] = m[10], m[9]
+        m = m[:13]
+
+        return m
 
 
 class Limerick:
