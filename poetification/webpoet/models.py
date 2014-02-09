@@ -3,41 +3,48 @@ from django.contrib.auth.models import User
 import urllib, json
 from lineutils import *
 from collections import defaultdict
+from syllable import *
 
-class Poem(models.Model):
-    # expects a list of phrases
+class PostList(models.Model):
+    def __init__(self, phrases):
+        self.lines = [Line(p) for p in phrases]
+
     @staticmethod
-    def getFamilies(phrases):
-        families = defaultdict(set)
-        for p in phrases:
-            words = remove_symbols(remove_urls(p)).split()
-            if len(words) == 0:
-                continue
+    def fromFacebookFeed(feed):
+        postlist = PostList([msg['message'] for msg in feed])
 
-            lastword = RhymeWord.findWord(words[-1])
-
-            if not lastword:
-                continue 
-            
-            families[lastword.rhyme_phoneme].add(p)
-
-        return families
+        return postlist
 
     @staticmethod
     def fromTwitterTimeline(timeline):
-        families = Poem.getFamilies([tweet['text'] for tweet in timeline])
-        # print families
-        for family in families.keys():
-            print len(families[family]), family, families[family]
+        postlist = PostList([tweet['text'] for tweet in timeline])
 
-
-        return families
+        return postlist
 
 
 class Line(models.Model):
-    poem = models.ForeignKey(Poem)
-    text = models.CharField(max_length=2048, blank=True, null=False)
-    syllables = models.IntegerField()
+    def __init__(self, phrase):
+        self.text = phrase
+        self.rw = RhymeWord.findWord(self.clean_text.split()[-1])
+            
+    def nsyl(self, word):
+        word = RhymeWord.findWord(word)
+        if not word:
+            return 0
+        else:
+            return word.syllables
+    
+    @properties
+    def syllables(self):
+        words = self.text.split()
+        count = 0
+        for word in words:
+            count += self.nsyl(word)
+        return count
+
+    @property
+    def clean_text(self):
+        return remove_symbols(remove_urls(text))
 
 
 class RhymeWord(models.Model):
