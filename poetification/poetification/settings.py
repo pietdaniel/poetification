@@ -49,6 +49,7 @@ TWITTER_CONSUMER_KEY         = os.environ['P_APP_KEY']
 TWITTER_CONSUMER_SECRET      = os.environ['P_APP_SECRET']
 FACEBOOK_APP_ID              = os.environ['FACEBOOK_APP_ID']
 FACEBOOK_API_SECRET          = os.environ['FACEBOOK_API_SECRET']
+FACEBOOK_EXTENDED_PERMISSIONS = ['read_stream']
 LOGIN_URL          = '/login-form/'
 LOGIN_REDIRECT_URL = '/complete/twitter/'
 LOGIN_ERROR_URL    = '/login-error/'
