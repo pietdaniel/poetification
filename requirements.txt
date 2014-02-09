@@ -9,3 +9,4 @@ requests-oauthlib==0.4.0
 simplejson==3.3.2
 twython==3.1.2
 wsgiref==0.1.2
+python-social-auth==0.1.21

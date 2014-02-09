@@ -1,0 +1,57 @@
+Iambic Pentameter (10 syllables)
+
+Pantoum
+a1 b1 a2 b2
+b1 c1 b2 c2
+c1 d1 c2 d2
+d1 e1 d2 e2
+e1 f1 e2 f2
+f1 a2 f2 a1
+
+Sonnets
+a b a b c d c d e f e f g g
+
+Limericks
+a a b b a (a: 8-10 syllables, b: 5-7 syllables)
+
+Dodoitsu
+7 7 7 5 (no rhyme
+
+Rondeau
+a a b b a a a b R
+a a b b a R
+(a: 8, b: 5, R: 2)
+
+Something something normalizing syllable weights.
+
+-----------------
+
+GENERAL:
+
+Remove single element families.
+
+Cast odd -> even based on weights.
+
+Since we're only dealing with even sets, maybe it makes sense to take the largest and start with that.
+
+Alternative-merge:
+  Take largest
+    Alternate with second largest
+    When that's gone, return the poem. 
+    Recur on the remainder.
+
+If families don't rhyme (a b c d e ...), try haikus or dodoitsus.
+Else, free form and sort by syllable.
+
+Facebook: Tokenize by sentence.
+
+TO-DO:::::
+Form predicate functions.
+General algorithm.
+Alternative merging.
+Free form cases.
+Normalize weights. 
+-- FB Oauth bug
+-- Tweet 0> Algorithm
+-- Github...
+ 
