@@ -27,7 +27,7 @@ def home(request):
 def fbauth(request):
 	redirect_state = request.GET['redirect_state']
 	redirect_uri = "http://127.0.0.1/complete/facebook/?redirect_state="+redirect_state
-	get_access_token = "https://graph.facebook.com/oauth/access_token?client_id="+settings.FACEBOOK_APP_ID+"&redirect_uri="+redirect_uri+"&client_secret="+settings.FACEBOOK_API_SECRET+"&code="+request.GET['code']
+	get_access_token = "https://graph.facebook.com/oauth/access_token?client_id="+settings.FACEBOOK_APP_ID+"&redirect_uri="+redirect_uri+"&client_secret="+settings.FACEBOOK_API_SECRET+"&code="+request.GET['code']+"&scope=read_stream"
 	contents = urllib2.urlopen(get_access_token)
 	response = contents.read()
 	contents.close()
