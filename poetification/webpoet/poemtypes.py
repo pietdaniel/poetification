@@ -9,9 +9,6 @@ class Pantoum:
     def pred(posts):
         pass
 
-    # pattern = {["" : 0],
-    #            }
-    
 
 class Sonnet:
     def pred(self, posts):
