@@ -21,8 +21,11 @@ def poem_helper_fb(result):
 	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result))
 	if dodoitsu:
 		poems.append(['Dodoitsu', dodoitsu])
-	if (haiku or dodoitsu):
-		return poems
+        general = PostList.getGeneral(PostList.fromFacebookFeed(result))
+        if general:
+                poems.append(['Other', general])
+        if (general or haiku or doditsu):
+                return poems
 	else:
 		poems.append(['Sorry',['No poems were created']])
 		return poems
@@ -35,8 +38,11 @@ def poem_helper_tw(result):
 	dodoitsu = PostList.getDodoitsu(PostList.fromTwitterTimeline(result))
 	if dodoitsu:
 		poems.append(['Dodoitsu', dodoitsu])
-	if (haiku or dodoitsu):
-		return poems
+        general = PostList.getGeneral(PostList.fromTwitterTimeline(result))
+        if general:
+                poems.append(['Other', general])
+        if (general or haiku or doditsu):
+                return poems
 	else:
 		poems.append(['Sorry',['No poems where created']])
 		return poems

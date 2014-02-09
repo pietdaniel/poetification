@@ -4,6 +4,26 @@ import models as m
 #     pattern = {}
 #     def check_pattern(self, fams):
 
+class GeneralPoem:
+    def pred(self, posts):
+        m = []
+        print "pred"
+        fhash = posts.familyhash.copy()
+        for family in fhash.keys():
+            flist = fhash[family]
+            while len(flist) >= 2:
+                # take out two elements
+                print "hahaha"
+                m.append(flist.pop().text)
+                m.append(flist.pop().text)
+        
+        try:
+            for i in range(0, len(m), 4):
+                m[i+1], m[i+2] = m[i+2], m[i+1]
+        except: pass
+
+        return m
+
         
 class Pantoum:
     def pred(posts):
@@ -15,14 +35,13 @@ class Sonnet:
     def pred(self, posts):
         m = []
         fhash = posts.familyhash.copy()
-        print fhash
         # Needs 6 pairs of cardinality 2
         for family in fhash.keys():
             flist = fhash[family]
             while len(flist) >= 2:
                 # take out two elements
-                m.append(flist.pop())
-                m.append(flist.pop())
+                m.append(flist.pop().text)
+                m.append(flist.pop().text)
 
         if len(m) < 14:
             return False
@@ -52,7 +71,7 @@ class Dodoitsu:
 			if (line==None):
 				continue
 			syl = line.syllables
-			print line.clean_text + " : " + str(syl)
+			# print line.rw.rhyme_phoneme + "||" + line.clean_text + " : " + str(syl) 
 			if syl==5 and not four_seen:
 				four=line.text
 				four_seen=True
@@ -94,7 +113,7 @@ class Haiku:
 			if (line == None):
 				continue
 			syl = line.syllables
-			print line.clean_text + " : " + str(syl)
+			# print line.clean_text + " : " + str(syl)
 			if syl == 5:
 				if (self.first == ""):
 					frst = True

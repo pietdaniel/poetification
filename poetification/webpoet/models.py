@@ -8,13 +8,13 @@ from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
-        # self.lines = filter(lambda x: x, self.lines)
-        print self.lines
+        self.lines = filter(lambda x: bool(x), self.lines)
+        # print self.lines
 
     @staticmethod
     def fromFacebookFeed(feed):
         feeddata = []
-        print feed
+        # print feed
         try:
             feeddata = feed['paging']['data']
         except:
@@ -35,6 +35,10 @@ class PostList(models.Model):
         postlist = PostList([tweet['text'] for tweet in timeline])
         return postlist
 
+    @staticmethod
+    def getGeneral(posts):
+        g = GeneralPoem()
+        return g.pred(posts)
 
     @staticmethod
     def getHaiku(posts):
