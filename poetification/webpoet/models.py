@@ -8,7 +8,7 @@ from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
-        # self.lines = filter(lambda x: x, self.lines)
+        self.lines = filter(lambda x: bool(x), self.lines)
         # print self.lines
 
     @staticmethod
@@ -56,7 +56,6 @@ class PostList(models.Model):
     def familyhash(self):
         d = defaultdict(list)
         for l in self.lines:
-            print "appending"
             d[l.rw.rhyme_phoneme].append(l)
         return d
 

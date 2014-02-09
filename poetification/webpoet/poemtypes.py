@@ -20,8 +20,8 @@ class Sonnet:
             flist = fhash[family]
             while len(flist) >= 2:
                 # take out two elements
-                m.append(flist.pop())
-                m.append(flist.pop())
+                m.append(flist.pop().text)
+                m.append(flist.pop().text)
 
         if len(m) < 14:
             return False
@@ -32,7 +32,6 @@ class Sonnet:
         m = m[:13]
 
         return m
-
 
 class Limerick:
     pass
