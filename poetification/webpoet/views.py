@@ -33,16 +33,16 @@ def fbauth(request):
 	contents.close()
 	re_find = re.search("(?<=\=)(.*?)(?=\&)", response)
 	access_token = re_find.group(0)
-	get_posts_request = "https://graph.facebook.com/me/posts?limit=500&access_token="+access_token
+	get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
 	contents = urllib2.urlopen(get_posts_request).read()
 	print contents
 
 def fbaccess(request):
 	print 'fbaccess'
 
-def twauth(request, redirect_url="/access/"):
+def twauth(request, redirect_url="/twaccess/"):
 	twitter = Twython(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
-	auth = twitter.get_authentication_tokens(callback_url='http://127.0.0.1/access/')
+	auth = twitter.get_authentication_tokens(callback_url='http://127.0.0.1/twaccess/')
 	OAUTH_TOKEN = auth['oauth_token']
 	OAUTH_TOKEN_SECRET = auth['oauth_token_secret']
 	request.session['oauth_token'] = OAUTH_TOKEN
