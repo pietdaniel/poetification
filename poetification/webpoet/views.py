@@ -24,8 +24,14 @@ def poem_helper_fb(result):
         general = PostList.getGeneral(PostList.fromFacebookFeed(result))
         if general:
                 poems.append(['Other', general])
-        if (general or haiku or doditsu):
-                return poems
+	sonnet = PostList.getSonnet(PostList.fromFacebookFeed(result))
+	if sonnet:
+		poems.append(['Sonnet', sonnet])
+	limerick = PostList.getLimerick(PostList.fromFacebookFeed(result))
+	if limerick:
+		poems.append(['Limerick', limerick])
+	if (haiku or dodoitsu or sonnet or limerick or general):
+		return poems
 	else:
 		poems.append(['Sorry',['No poems were created']])
 		return poems
@@ -41,8 +47,14 @@ def poem_helper_tw(result):
         general = PostList.getGeneral(PostList.fromTwitterTimeline(result))
         if general:
                 poems.append(['Other', general])
-        if (general or haiku or doditsu):
-                return poems
+	sonnet = PostList.getSonnet(PostList.fromTwitterTimeline(result))
+	if sonnet:
+		poems.append(['Sonnet', sonnet])
+	limerick = PostList.getLimerick(PostList.fromTwitterTimeline(result))
+	if limerick:
+		poems.append(['Limerick', limerick])
+	if (haiku or dodoitsu or sonnet or limerick or general):
+		return poems
 	else:
 		poems.append(['Sorry',['No poems where created']])
 		return poems

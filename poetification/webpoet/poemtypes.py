@@ -31,7 +31,6 @@ class Pantoum:
 
 
 class Sonnet:
-    
     def pred(self, posts):
         m = []
         fhash = posts.familyhash.copy()
@@ -53,9 +52,41 @@ class Sonnet:
 
         return m
 
-
 class Limerick:
-    pass
+    def pred(self, posts):
+    	m = []
+    	n = []
+        fmap = posts.familyhash.copy()
+        # print fhash
+        # Needs 1 pairs of syl 5-7
+        # Needs 3-tuple of syl 8-10
+        for family in fmap.keys():
+            flist = fmap[family]
+            if len(flist) >= 3:
+            	while (len(m)<=2):
+            		try:
+	            		ele = flist.pop()
+	            	except Exception as e:
+	            		break
+	            	if (ele.syllables > 7 and  ele.syllables < 11):
+	            		m.append(ele.text)
+
+	    for family in fmap.keys():
+			flist = fmap[family]
+            if (len(flist)) >= 2:
+            	while(len(n)<=1):
+            		try:
+            			ele = flist.pop()
+            		except Exception as e:
+	            		break
+            		if (ele.syllables > 4 and ele.syllables < 8):
+            			n.append(ele.text)
+
+
+        if (len(m)+len(n)) < 5:
+            return False
+
+        return [m[0],m[1],n[0],n[1],m[1]]
 
 class Dodoitsu:
 	def makeDodoitsu(self, posts):

@@ -13,18 +13,20 @@ class PostList(models.Model):
 
     @staticmethod
     def fromFacebookFeed(feed):
+        # postlist = PostList([msg['message'] for msg in feed])
+        # return postlist
         feeddata = []
         # print feed
         try:
             feeddata = feed['paging']['data']
         except:
-            print "error"
+            # print "error"
             feeddata = feed['data']
         finally:
             postlist = []
             for msg in feeddata:
                 try:
-                    print msg['message']
+                    # print msg['message']
                     postlist.append(msg['message'])
                 except: continue
                 
@@ -54,13 +56,15 @@ class PostList(models.Model):
         h = Sonnet()
         return h.pred(posts)
 
+    def getLimerick(posts):
+        l = Limerick()
+        return l.pred(posts)
+
     @property
     def familyhash(self):
         d = defaultdict(list)
         for l in self.lines:
-            print "appending"
             d[l.rw.rhyme_phoneme].append(l)
-
         return d
 
     # @property
