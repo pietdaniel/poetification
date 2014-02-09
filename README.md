@@ -23,6 +23,7 @@ frontend? twitter bootstrap
 pip isntall django
 pip install nltk
 pip install django-social-auth
+pip install twython
 python nltk.py
 
 

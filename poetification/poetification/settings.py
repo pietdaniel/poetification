@@ -50,12 +50,11 @@ TWITTER_CONSUMER_SECRET      = os.environ['P_APP_SECRET']
 FACEBOOK_APP_ID              = os.environ['FACEBOOK_APP_ID']
 FACEBOOK_API_SECRET          = os.environ['FACEBOOK_API_SECRET']
 LOGIN_URL          = '/login-form/'
-LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_REDIRECT_URL = '/complete/twitter/'
 LOGIN_ERROR_URL    = '/login-error/'
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
-SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
