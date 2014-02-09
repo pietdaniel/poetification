@@ -14,12 +14,13 @@
   <div class="container">
   <div class="row">
     <div class="col-lg-4 text-center" style='padding-top:90px'>
-    	<a href="/twitter"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/twitter_button.png"%}"></a>
+    	<a href="{% url "socialauth_begin" "twitter" %}"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/twitter_button.png"%}"></a>
+      
    </div>
    <div class="col-lg-4"></div>
     <div class="col-lg-4 text-center" style='padding-top:90px'>
-    	<a href="/facebook"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/facebook_button.png"%}"></a>
-          
+    	<a href="{% url "socialauth_begin" "facebook" %}"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/facebook_button.png"%}"></a>
+      
     </div>
   </div>
 </div>

@@ -45,8 +45,8 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
 )
 
-TWITTER_CONSUMER_KEY         = ''
-TWITTER_CONSUMER_SECRET      = ''
+TWITTER_CONSUMER_KEY         = os.environ['P_OAUTH_TOKEN']
+TWITTER_CONSUMER_SECRET      = os.environ['P_OAUTH_SECRET']
 FACEBOOK_APP_ID              = ''
 FACEBOOK_API_SECRET          = ''
 LOGIN_URL          = '/login-form/'
