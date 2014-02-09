@@ -1,3 +1,8 @@
+from utils import remove_urls
+from utils import remove_symbols
+from rhyme import rhyme
+from syllable import line_syl
+
 class PoemLine:
     """A line in the poem"""
 

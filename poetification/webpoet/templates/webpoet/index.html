@@ -2,13 +2,30 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Web Poems</h3>
+<!-- <div class="panel panel-default"> -->
+  <!-- <div class="panel-heading"> -->
+    <!-- <h3 class="panel-title">Web Poems</h3> -->
+  <!-- </div> -->
+  <div class="panel-title text-center" style='padding-top:90px'>
+    <h1 id='home_title'>POETIFICATION</h1>
   </div>
-  <div class="panel-body">
-    <h1>STUFF</h1>
+
+
+  <div class="container">
+  <div class="row">
+    <div class="col-lg-4 text-center" style='padding-top:90px'>
+    	<a href="{% url "socialauth_begin" "twitter" %}"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/twitter_button.png"%}"></a>
+      
+   </div>
+   <div class="col-lg-4"></div>
+    <div class="col-lg-4 text-center" style='padding-top:90px'>
+    	<a href="{% url "socialauth_begin" "facebook" %}"><img style='width:250px;cursor:pointer;' src="{% static "webpoet/images/facebook_button.png"%}"></a>
+      
+    </div>
   </div>
 </div>
+
+
+<!-- </div> -->
 {% endblock %}
 

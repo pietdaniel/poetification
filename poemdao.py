@@ -101,4 +101,3 @@ class Poem:
             if (seen[s][0]==setA):
                 seen[s][1]=True
                 seen[s][1]
-

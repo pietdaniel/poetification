@@ -2,13 +2,10 @@ import curses
 from curses.ascii import isdigit
 import nltk
 from nltk.corpus import cmudict
-d = cmudict.dict()
+cmudict = cmudict.dict()
 import json
 import urllib
 
-"""
-Only works on actual words
-"""
 def nsyl(word):
     try:
         print d[word.lower()]
