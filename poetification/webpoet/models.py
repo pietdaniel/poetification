@@ -3,29 +3,44 @@ from django.contrib.auth.models import User
 import urllib, json
 from lineutils import *
 from collections import defaultdict
-from syllable import *
-
+# from syllable import *
+from poemtypes import Haiku
 class PostList(models.Model):
     def __init__(self, phrases):
-        self.lines = [Line(p) for p in phrases]
+        self.lines = [Line.get_line(p) for p in phrases]
 
     @staticmethod
     def fromFacebookFeed(feed):
         postlist = PostList([msg['message'] for msg in feed])
-
         return postlist
 
     @staticmethod
     def fromTwitterTimeline(timeline):
         postlist = PostList([tweet['text'] for tweet in timeline])
-
         return postlist
 
+    @staticmethod
+    def getHaiku(posts):
+        h = Haiku()
+        return h.makeHaiku(posts)
 
 class Line(models.Model):
     def __init__(self, phrase):
         self.text = phrase
-        self.rw = RhymeWord.findWord(self.clean_text.split()[-1])
+        # if (len(self.clean_text) == 0):
+        #     self.rw = ""
+        # else:
+        #     self.rw = RhymeWord.findWord(self.clean_text.split()[-1])
+
+    @staticmethod
+    def get_line(phrase):
+        l = Line(phrase)
+        if (len(l.clean_text) > 1):
+            l.rw = RhymeWord.findWord(l.clean_text.split()[-1])
+            return l
+        else:
+            return None
+
             
     def nsyl(self, word):
         word = RhymeWord.findWord(word)
@@ -34,7 +49,7 @@ class Line(models.Model):
         else:
             return word.syllables
     
-    @properties
+    @property
     def syllables(self):
         words = self.text.split()
         count = 0
@@ -44,7 +59,7 @@ class Line(models.Model):
 
     @property
     def clean_text(self):
-        return remove_symbols(remove_urls(text))
+        return remove_symbols(remove_urls(self.text))
 
 
 class RhymeWord(models.Model):

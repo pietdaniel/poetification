@@ -3,4 +3,4 @@ from models import *
 
 # Register your models here.
 admin.site.register(Line)
-admin.site.register(Poem)
+admin.site.register(PostList)

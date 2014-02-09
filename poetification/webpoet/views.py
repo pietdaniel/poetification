@@ -20,7 +20,7 @@ def index(request):
 # Create your views here.
 def home(request):
     template = loader.get_template('webpoet/index.html')
-    poems = Poem.objects.all()
+    poems = PostList.objects.all()
     context = RequestContext(request, {'poems' : poems})
     return HttpResponse(template.render(context))
 
@@ -36,7 +36,8 @@ def fbauth(request):
     get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
-    poems = Poem.getHaiku(Poem.fromFacebookFeed(result['data']))
+    poems = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
+    print poems
     return HttpResponse(poems)
 
 def fbaccess(request):
@@ -59,7 +60,7 @@ def twaccess(request, redirect_url="/home"):
     OAUTH_TOKEN_SECRET = final_step['oauth_token_secret']
     twitter = Twython(settings.TWITTER_CONSUMER_KEY,settings.TWITTER_CONSUMER_SECRET,OAUTH_TOKEN,OAUTH_TOKEN_SECRET)
 
-    poems = Poem.fromTwitterTimeline(twitter.get_user_timeline())
+    poems = PostList.fromTwitterTimeline(twitter.get_user_timeline())
     return HttpResponse(poems)
 
 
