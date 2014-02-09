@@ -36,7 +36,9 @@ def fbauth(request):
     get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
-    poems = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
+    poems = []
+    poems.append(PostList.getHaiku(PostList.fromFacebookFeed(result['data'])))
+    poems.append(PostList.getDodoitsu(PostList.fromFacebookFeed(result['data'])))
     print poems
     template = loader.get_template('webpoet/poem.html')
     context = RequestContext(request, {'poems' : poems})

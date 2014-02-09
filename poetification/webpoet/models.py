@@ -4,7 +4,7 @@ import urllib, json
 from lineutils import *
 from collections import defaultdict
 # from syllable import *
-from poemtypes import Haiku
+from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
@@ -23,6 +23,12 @@ class PostList(models.Model):
     def getHaiku(posts):
         h = Haiku()
         return h.makeHaiku(posts)
+
+    @staticmethod
+    def getDodoitsu(posts):
+        d = Dodoitsu()
+        return d.makeDodoitsu(posts)
+
 
 class Line(models.Model):
     def __init__(self, phrase):

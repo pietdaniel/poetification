@@ -16,8 +16,11 @@
     <div class="col-lg-4 text-center" style='padding-top:90px'>
    </div>
    <div class="col-lg-4">
-      {% for line in poems %}
-        <div class='text-center'>{{line}}</div>
+      {% for poem in poems %}
+        {% for line in poem %}
+          <div class='text-center'>{{line}}</div>
+        {% endfor %}
+        <hr>
       {% endfor %}
    </div>
     <div class="col-lg-4 text-center" style='padding-top:90px'>

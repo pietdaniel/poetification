@@ -39,12 +39,40 @@ class Limerick:
     pass
 
 class Dodoitsu:
-	pass
-	# one=""
-	# two=""
+	def makeDodoitsu(self, posts):
+		one=""
+		two=""
+		three=""
+		four=""
+		one_seen=False
+		two_seen=False
+		three_seen=False
+		four_seen=False
+		for line in posts.lines:
+			if (line==None):
+				continue
+			syl = line.syllables
+			print line.clean_text + " : " + str(syl)
+			if syl==5 and not four_seen:
+				four=line.text
+				four_seen=True
+			elif syl==7:
+				if not one_seen:
+					one=line.text
+					one_seen=True
+					continue
+				if not two_seen:
+					two=line.text
+					two_seen=True
+					continue
+				if not three_seen:
+					three=line.text
+					three_seen=True	
+					continue
+			if one_seen and two_seen and three_seen and four_seen:
+				return [one,two,three,four]
+		return False
 
-	# def makeDodoitsu(self, posts):
-	# 	for line in posts.lines():
 
  #    pattern = {"" : 7,
  #               "" : 7,
@@ -66,8 +94,7 @@ class Haiku:
 			if (line == None):
 				continue
 			syl = line.syllables
-			print syl
-			print line.clean_text
+			print line.clean_text + " : " + str(syl)
 			if syl == 5:
 				if (self.first == ""):
 					frst = True
@@ -78,10 +105,9 @@ class Haiku:
 			if syl == 7 and not scnd:
 				scnd = True
 				self.second = line.text
-		if (frst and scnd and thrd):
-			return [self.first,self.second,self.third]
-		else:
-			return False
+			if (frst and scnd and thrd):
+				return [self.first,self.second,self.third]
+		return False
 
 class General:
 	pass
