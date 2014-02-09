@@ -39,10 +39,17 @@ class Limerick:
     pass
 
 class Dodoitsu:
-    pattern = {"" : 7,
-               "" : 7,
-               "" : 7,
-               "" : 5}
+	pass
+	# one=""
+	# two=""
+
+	# def makeDodoitsu(self, posts):
+	# 	for line in posts.lines():
+
+ #    pattern = {"" : 7,
+ #               "" : 7,
+ #               "" : 7,
+ #               "" : 5}
 
 class Rondeau:
     pass
@@ -64,13 +71,13 @@ class Haiku:
 			if syl == 5:
 				if (self.first == ""):
 					frst = True
-					self.first = line.clean_text
+					self.first = line.text
 				else:
 					thrd = True
-					self.third = line.clean_text
+					self.third = line.text
 			if syl == 7 and not scnd:
 				scnd = True
-				self.second = line.clean_text
+				self.second = line.text
 		if (frst and scnd and thrd):
 			return [self.first,self.second,self.third]
 		else:

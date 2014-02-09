@@ -38,7 +38,9 @@ def fbauth(request):
     result = json.loads(contents)
     poems = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
     print poems
-    return HttpResponse(poems)
+    template = loader.get_template('webpoet/poem.html')
+    context = RequestContext(request, {'poems' : poems})
+    return HttpResponse(template.render(context))
 
 def fbaccess(request):
     print 'fbaccess'
