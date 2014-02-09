@@ -8,13 +8,15 @@ from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
-        self.lines = filter(lambda x: x, self.lines)
-        print self.lines
+        # self.lines = filter(lambda x: x, self.lines)
+        # print self.lines
 
     @staticmethod
     def fromFacebookFeed(feed):
+        # postlist = PostList([msg['message'] for msg in feed])
+        # return postlist
         feeddata = []
-        print feed
+        # print feed
         try:
             feeddata = feed['paging']['data']
         except:
@@ -24,7 +26,7 @@ class PostList(models.Model):
             postlist = []
             for msg in feeddata:
                 try:
-                    print msg['message']
+                    # print msg['message']
                     postlist.append(msg['message'])
                 except: continue
                 
@@ -56,7 +58,6 @@ class PostList(models.Model):
         for l in self.lines:
             print "appending"
             d[l.rw.rhyme_phoneme].append(l)
-
         return d
 
     # @property
@@ -118,6 +119,7 @@ class RhymeWord(models.Model):
 
     @staticmethod
     def findWord(word):
+        rw = None
         try:
             rw = RhymeWord.objects.get(word=word)
         except:

@@ -14,11 +14,10 @@ class Pantoum:
     
 
 class Sonnet:
-    
     def pred(self, posts):
         m = []
         fhash = posts.familyhash.copy()
-        print fhash
+        # print fhash
         # Needs 6 pairs of cardinality 2
         for family in fhash.keys():
             flist = fhash[family]

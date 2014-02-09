@@ -15,13 +15,16 @@ from twython import Twython
 
 def poem_helper_fb(result):
 	poems = []
-	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
+	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result))
 	if haiku:
 		poems.append(['Haiku', haiku])
-	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result['data']))
+	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result))
 	if dodoitsu:
 		poems.append(['Dodoitsu', dodoitsu])
-	if (haiku or dodoitsu):
+	sonnet = PostList.getSonnet(PostList.fromFacebookFeed(result))
+	if sonnet:
+		poems.append(['Sonnet', sonnet])
+	if (haiku or dodoitsu or sonnet):
 		return poems
 	else:
 		poems.append(['Sorry',['No poems were created']])
@@ -35,7 +38,10 @@ def poem_helper_tw(result):
 	dodoitsu = PostList.getDodoitsu(PostList.fromTwitterTimeline(result))
 	if dodoitsu:
 		poems.append(['Dodoitsu', dodoitsu])
-	if (haiku or dodoitsu):
+	sonnet = PostList.getSonnet(PostList.fromTwitterTimeline(result))
+	if sonnet:
+		poems.append(['Sonnet', sonnet])
+	if (haiku or dodoitsu or sonnet):
 		return poems
 	else:
 		poems.append(['Sorry',['No poems where created']])
