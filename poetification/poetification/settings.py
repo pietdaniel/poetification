@@ -45,10 +45,10 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
 )
 
-TWITTER_CONSUMER_KEY         = os.environ['P_OAUTH_TOKEN']
-TWITTER_CONSUMER_SECRET      = os.environ['P_OAUTH_SECRET']
-FACEBOOK_APP_ID              = ''
-FACEBOOK_API_SECRET          = ''
+TWITTER_CONSUMER_KEY         = os.environ['P_APP_KEY']
+TWITTER_CONSUMER_SECRET      = os.environ['P_APP_SECRET']
+FACEBOOK_APP_ID              = os.environ['FACEBOOK_APP_ID']
+FACEBOOK_API_SECRET          = os.environ['FACEBOOK_API_SECRET']
 LOGIN_URL          = '/login-form/'
 LOGIN_REDIRECT_URL = '/logged-in/'
 LOGIN_ERROR_URL    = '/login-error/'
