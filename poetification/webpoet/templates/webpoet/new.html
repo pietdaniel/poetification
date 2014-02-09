@@ -1,39 +1,50 @@
-<!-- {% extends "webpoet/base.html" %}
-{% load staticfiles %}
 
-{% block head %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" media="all" href="{% static "reportui/css/webpoet.css" %}" />
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
 
-{% block content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">New poem</h3>
-  </div>
-  <div class="panel-body">
+  <title>Beginnings</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="./../../static/webpoet/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../static/webpoet/css/flat-ui.css" rel="stylesheet">
+  <link href="../../static/webpoet/css/flashpace.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+  <div class="container">
     <div class="row">
-      <div class="col-xs-4">
-        <div class="todo">
-          <ul>
-            <li class="todo-done">
-              <div class="todo-icon"></div>
-              <div class="todo-content">
-                <h4 class="todo-name">Facebook</h4>
-              </div>
-            </li>
-            <li class="todo-done">
-              <div class="todo-icon"></div>
-              <div class="todo-content">
-                <h4 class="todo-name">Twitter</h4>
-              </div>
-            </li>
-          </ul>
-        </div>
+      <div class="jumbotron text-center" style="letter-spacing: 20px; margin-top: 15px;">
+        <h2>POETIFICATION</h2>
       </div>
     </div>
+
+    <div class="row" style="margin-left: 10px;">
+      <div style="width: 108px; float: left;"> 
+          <ul class="nav nav-pills nav-stacked" style="width: 50px;">
+           <li><button class="btn :hover">Haiku</button></li>
+           <li><button class="btn :hover">Sonnet</button></li>
+           <li><button class="btn :hover">Limerick</button></li>
+           <li><button class="btn :hover">Dodoitsu</button></li>
+           <li><button class="btn :hover">Free verse</button></li>
+           <br>
+         </ul>            
+     </div>
+
+     <div style="float: left; margin-left: 25px; width: 45%">
+      poems go heeeeeeere
+    </div>
+
   </div>
 </div>
-{% endblock %}
 
- -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="../../static/webpoet/js/bootstrap.min.js"></script>
+  </body>
+  </html>
