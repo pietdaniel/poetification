@@ -3,12 +3,13 @@ from django.contrib.auth.models import User
 import urllib, json
 from lineutils import *
 from collections import defaultdict
+import poemtypes
 
 class Poem(models.Model):
     # expects a list of phrases
     @staticmethod
     def getFamilies(phrases):
-        families = defaultdict(set)
+        families = defaultdict(list)
         for p in phrases:
             words = remove_symbols(remove_urls(p)).split()
             if len(words) == 0:
@@ -19,7 +20,7 @@ class Poem(models.Model):
             if not lastword:
                 continue 
             
-            families[lastword.rhyme_phoneme].add(p)
+            families[lastword.rhyme_phoneme].append( p )
 
         return families
 
@@ -29,9 +30,22 @@ class Poem(models.Model):
         # print families
         for family in families.keys():
             print len(families[family]), family, families[family]
-
-
         return families
+
+    @staticmethod
+    def fromFacebookFeed(feed):
+        families = Poem.getFamilies([line['message'] for line in feed])
+        # print families
+        for family in families.keys():
+            print len(families[family]), family, families[family]
+        return families
+
+    @staticmethod
+    def getHaiku(families):
+        haiku = poemtypes.Haiku()
+        return haiku.makeHaiku(families)
+
+
 
 
 class Line(models.Model):

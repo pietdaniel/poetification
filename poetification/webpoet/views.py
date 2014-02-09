@@ -35,8 +35,9 @@ def fbauth(request):
     access_token = re_find.group(0)
     get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
-    print contents
-    return HttpResponse()
+    result = json.loads(contents)
+    poems = Poem.getHaiku(Poem.fromFacebookFeed(result['data']))
+    return HttpResponse(poems)
 
 def fbaccess(request):
     print 'fbaccess'
