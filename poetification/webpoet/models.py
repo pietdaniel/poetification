@@ -8,7 +8,7 @@ from poemtypes import *
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
-        self.lines = filter(lambda x: x, self.lines)
+        # self.lines = filter(lambda x: x, self.lines)
         print self.lines
 
     @staticmethod
@@ -118,6 +118,7 @@ class RhymeWord(models.Model):
 
     @staticmethod
     def findWord(word):
+        rw = None
         try:
             rw = RhymeWord.objects.get(word=word)
         except:

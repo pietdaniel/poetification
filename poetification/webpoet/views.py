@@ -15,10 +15,10 @@ from twython import Twython
 
 def poem_helper_fb(result):
 	poems = []
-	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result['data']))
+	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result))
 	if haiku:
 		poems.append(['Haiku', haiku])
-	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result['data']))
+	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result))
 	if dodoitsu:
 		poems.append(['Dodoitsu', dodoitsu])
 	if (haiku or dodoitsu):
@@ -60,7 +60,7 @@ def fbauth(request):
     contents.close()
     re_find = re.search("(?<=\=)(.*?)(?=\&)", response)
     access_token = re_find.group(0)
-    get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&limit=9999&access_token="+access_token
+    get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&limit=50&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
     # poems = []
