@@ -20,7 +20,7 @@ class PostList(models.Model):
         try:
             feeddata = feed['paging']['data']
         except:
-            print "error"
+            # print "error"
             feeddata = feed['data']
         finally:
             postlist = []
@@ -51,6 +51,10 @@ class PostList(models.Model):
     def getSonnet(posts):
         h = Sonnet()
         return h.pred(posts)
+
+    def getLimerick(posts):
+        l = Limerick()
+        return l.pred(posts)
 
     @property
     def familyhash(self):

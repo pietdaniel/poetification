@@ -24,7 +24,10 @@ def poem_helper_fb(result):
 	sonnet = PostList.getSonnet(PostList.fromFacebookFeed(result))
 	if sonnet:
 		poems.append(['Sonnet', sonnet])
-	if (haiku or dodoitsu or sonnet):
+	limerick = PostList.getLimerick(PostList.fromFacebookFeed(result))
+	if limerick:
+		poems.append(['Limerick', limerick])
+	if (haiku or dodoitsu or sonnet or limerick):
 		return poems
 	else:
 		poems.append(['Sorry',['No poems were created']])
@@ -41,7 +44,10 @@ def poem_helper_tw(result):
 	sonnet = PostList.getSonnet(PostList.fromTwitterTimeline(result))
 	if sonnet:
 		poems.append(['Sonnet', sonnet])
-	if (haiku or dodoitsu or sonnet):
+	limerick = PostList.getLimerick(PostList.fromTwitterTimeline(result))
+	if limerick:
+		poems.append(['Limerick', limerick])
+	if (haiku or dodoitsu or sonnet or limerick):
 		return poems
 	else:
 		poems.append(['Sorry',['No poems where created']])
