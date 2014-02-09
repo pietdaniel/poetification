@@ -17,3 +17,5 @@ def home(request):
 #     template = loader.get_template('webpoet/new.html')
 #     context = RequestContext(request, {})
 #     return HttpResponse(template.render(context))
+
+

@@ -1,12 +1,16 @@
 Iambic Pentameter (10 syllables)
 
 Pantoum
+<<<<<<< Updated upstream
 a1 b1 a2 b2
 b1 c1 b2 c2
 c1 d1 c2 d2
 d1 e1 d2 e2
 e1 f1 e2 f2
 f1 a2 f2 a1
+=======
+a1 b1 a2 b2 b1 c1 b2 c2 c1 d1 c2 d2 d1 e1 d2 e2 e1 f1 e2 f2 f1 a2 f2 a1
+>>>>>>> Stashed changes
 
 Sonnets
 a b a b c d c d e f e f g g
