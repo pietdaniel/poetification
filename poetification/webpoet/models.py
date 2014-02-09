@@ -5,21 +5,31 @@ from lineutils import *
 from collections import defaultdict
 
 class Poem(models.Model):
-    created = models.DateTimeField(auto_now_add=True, blank=True)
-
     # expects a list of phrases
     @staticmethod
     def getFamilies(phrases):
         families = defaultdict(set)
         for p in phrases:
             words = remove_symbols(remove_urls(p)).split()
-            
+            if len(words) == 0:
+                continue
+
             lastword = RhymeWord.findWord(words[-1])
 
             if not lastword:
                 continue 
             
-            families[lastword.rhyme_phoneme].append(one, two)
+            families[lastword.rhyme_phoneme].add(p)
+
+        return families
+
+    @staticmethod
+    def fromTwitterTimeline(timeline):
+        families = Poem.getFamilies([tweet['text'] for tweet in timeline])
+        # print families
+        for family in families.keys():
+            print len(families[family]), family, families[family]
+
 
         return families
 

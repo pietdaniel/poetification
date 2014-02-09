@@ -57,6 +57,9 @@ def twaccess(request, redirect_url="/home"):
     OAUTH_TOKEN = final_step['oauth_token']
     OAUTH_TOKEN_SECRET = final_step['oauth_token_secret']
     twitter = Twython(settings.TWITTER_CONSUMER_KEY,settings.TWITTER_CONSUMER_SECRET,OAUTH_TOKEN,OAUTH_TOKEN_SECRET)
-    print twitter.get_user_timeline()
+
+    poems = Poem.fromTwitterTimeline(twitter.get_user_timeline())
+    return HttpResponse(poems)
+
 
     # STUB RETURN HTTPRESPONSE AND SHIT
