@@ -1,63 +1,18 @@
-from django.http import HttpResponseRedirect
-from django.conf import settings
-from twython import Twython
-import re
-import urllib2
-
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.template  import RequestContext, loader
 from django.shortcuts import render, render_to_response, redirect
 from django.http import *
-from models import *
-import json
-
+from django.conf import settings
+from urlparse import *
 from twython import Twython
+from models import *
+from twython import Twython
+from poemtypes import *
 
-def poem_helper_fb(result):
-	poems = []
-	haiku = PostList.getHaiku(PostList.fromFacebookFeed(result))
-	if haiku:
-		poems.append(['Haiku', haiku])
-	dodoitsu = PostList.getDodoitsu(PostList.fromFacebookFeed(result))
-	if dodoitsu:
-		poems.append(['Dodoitsu', dodoitsu])
-        general = PostList.getGeneral(PostList.fromFacebookFeed(result))
-        if general:
-                poems.append(['Other', general])
-	sonnet = PostList.getSonnet(PostList.fromFacebookFeed(result))
-	if sonnet:
-		poems.append(['Sonnet', sonnet])
-	limerick = PostList.getLimerick(PostList.fromFacebookFeed(result))
-	if limerick:
-		poems.append(['Limerick', limerick])
-	if (haiku or dodoitsu or sonnet or limerick or general):
-		return poems
-	else:
-		poems.append(['Sorry',['No poems were created']])
-		return poems
-
-def poem_helper_tw(result):
-	poems = []
-	haiku = PostList.getHaiku(PostList.fromTwitterTimeline(result))
-	if haiku:
-		poems.append(['Haiku', haiku])
-	dodoitsu = PostList.getDodoitsu(PostList.fromTwitterTimeline(result))
-	if dodoitsu:
-		poems.append(['Dodoitsu', dodoitsu])
-        general = PostList.getGeneral(PostList.fromTwitterTimeline(result))
-        if general:
-                poems.append(['Other', general])
-	sonnet = PostList.getSonnet(PostList.fromTwitterTimeline(result))
-	if sonnet:
-		poems.append(['Sonnet', sonnet])
-	limerick = PostList.getLimerick(PostList.fromTwitterTimeline(result))
-	if limerick:
-		poems.append(['Limerick', limerick])
-	if (haiku or dodoitsu or sonnet or limerick or general):
-		return poems
-	else:
-		poems.append(['Sorry',['No poems where created']])
-		return poems
+import re
+import json
+import urllib2
 
 def index(request):
     return redirect('home')
@@ -81,14 +36,7 @@ def fbauth(request):
     get_posts_request = "https://graph.facebook.com/me/statuses?fields=message&limit=50&access_token="+access_token
     contents = urllib2.urlopen(get_posts_request).read()
     result = json.loads(contents)
-    # poems = []
-    # poems.append(PostList.getHaiku(PostList.fromFacebookFeed(result['data'])))
-    # poems.append(PostList.getDodoitsu(PostList.fromFacebookFeed(result['data'])))
-    poems = poem_helper_fb(result)
-# =======
-#     # print result
-#     poems = PostList.getSonnet(PostList.fromFacebookFeed(result))
-# >>>>>>> Stashed changes
+    poems = Poem.make(PostList.fromFacebookFeed(result))
     print poems
     template = loader.get_template('webpoet/poem.html')
     context = RequestContext(request, {'poems' : poems})
@@ -115,10 +63,49 @@ def twaccess(request, redirect_url="/home"):
     twitter = Twython(settings.TWITTER_CONSUMER_KEY,settings.TWITTER_CONSUMER_SECRET,OAUTH_TOKEN,OAUTH_TOKEN_SECRET)
     result = twitter.get_user_timeline()
     # poems = PostList.fromTwitterTimeline(twitter.get_user_timeline())
-    poems = poem_helper_tw(result)
+    poems = Poem.make(PostList.fromTwitterTimeline(result))
     template = loader.get_template('webpoet/poem.html')
     context = RequestContext(request, {'poems' : poems})
     return HttpResponse(template.render(context))
 
 
-    # STUB RETURN HTTPRESPONSE AND SHIT
+def ghauth(request, redirect_url="/ghaccess/"):
+    redirect_uri = request.build_absolute_uri(reverse('ghauth'))
+    print "Redirecting to", redirect_uri
+    auth_post_data = [('client_id',     settings.GITHUB_APP_ID),
+                      ('client_secret', settings.GITHUB_API_SECRET),
+                      ('code',          request.GET['code']),
+                      ('redirect_uri',  redirect_uri)]
+    result = urllib2.urlopen('https://github.com/login/oauth/access_token',
+                             urllib.urlencode(auth_post_data))
+    return HttpResponseRedirect(redirect_url + "?" + result.read())
+
+def ghaccess(request):
+    token = request.GET['access_token']
+    repo_request = urllib2.Request('https://api.github.com/user/repos',
+                                   headers = {'Authorization' : 'token ' + token})
+    repos = json.loads(urllib2.urlopen(repo_request).read())
+
+    all_messages = []
+
+    for repo in repos:
+        commits_url = 'https://api.github.com/repos/%s/commits' % repo['full_name']
+        print commits_url
+        try:
+            commits_request =\
+                urllib2.Request(commits_url,
+                                headers = {'Authorization' : 'token ' + token})
+            commits = json.loads(urllib2.urlopen(commits_request).read())
+            all_messages += [c['commit']['message'] for c in commits]
+        except:
+            # Probably no commits for this repo, continue
+            print "Failed to get commits for " + repo['full_name']
+
+    print all_messages
+
+    poems = Poem.make(PostList(all_messages))
+
+    template = loader.get_template('webpoet/poem.html')
+    context = RequestContext(request, {'poems' : poems})
+    return HttpResponse(template.render(context))
+        

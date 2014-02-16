@@ -49,13 +49,25 @@ TWITTER_CONSUMER_KEY         = os.environ['P_APP_KEY']
 TWITTER_CONSUMER_SECRET      = os.environ['P_APP_SECRET']
 FACEBOOK_APP_ID              = os.environ['FACEBOOK_APP_ID']
 FACEBOOK_API_SECRET          = os.environ['FACEBOOK_API_SECRET']
+GITHUB_APP_ID                = os.environ['GITHUB_APP_ID']
+GITHUB_API_SECRET            = os.environ['GITHUB_API_SECRET']
 FACEBOOK_EXTENDED_PERMISSIONS = ['read_stream']
 LOGIN_URL          = '/login-form/'
-LOGIN_REDIRECT_URL = '/complete/twitter/'
+LOGIN_REDIRECT_URL = '/complete/'
 LOGIN_ERROR_URL    = '/login-error/'
+
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_UID_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'github')
+
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
-SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -77,6 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
+    'social_auth.context_processors.social_auth_by_type_backends',
 )
 
 

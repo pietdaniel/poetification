@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import urllib, json
 from lineutils import *
+from nltk_contrib.readability import syllables_en as SE 
 from collections import defaultdict
 # from syllable import *
 from poemtypes import *
@@ -9,7 +10,9 @@ class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
         self.lines = filter(lambda x: bool(x), self.lines)
-        # print self.lines
+        
+        self.fhash = None
+
 
     @staticmethod
     def fromFacebookFeed(feed):
@@ -34,38 +37,17 @@ class PostList(models.Model):
 
     @staticmethod
     def fromTwitterTimeline(timeline):
-        postlist = PostList([tweet['text'] for tweet in timeline])
-        return postlist
-
-    @staticmethod
-    def getGeneral(posts):
-        g = GeneralPoem()
-        return g.pred(posts)
-
-    @staticmethod
-    def getHaiku(posts):
-        h = Haiku()
-        return h.makeHaiku(posts)
-
-    @staticmethod
-    def getDodoitsu(posts):
-        d = Dodoitsu()
-        return d.makeDodoitsu(posts)
-
-    def getSonnet(posts):
-        h = Sonnet()
-        return h.pred(posts)
-
-    def getLimerick(posts):
-        l = Limerick()
-        return l.pred(posts)
+        return PostList([tweet['text'] for tweet in timeline])
 
     @property
     def familyhash(self):
-        d = defaultdict(list)
-        for l in self.lines:
-            d[l.rw.rhyme_phoneme].append(l)
-        return d
+        if not self.fhash:
+            d = defaultdict(list)
+            for l in self.lines:
+                d[l.rw.rhyme_phoneme].append(l)
+            # Cache that SOB
+            self.fhash = d
+        return self.fhash
 
     # @property
     # def cardinality_sets(self):
@@ -89,11 +71,12 @@ class Line(models.Model):
 
             
     def nsyl(self, word):
-        word = RhymeWord.findWord(word)
-        if not word:
-            return 0
-        else:
-            return word.syllables
+        return SE.count(word)
+        # word = RhymeWord.findWord(word)
+        # if not word:
+        #     return 0
+        # else:
+        #     return word.syllables
     
     @property
     def syllables(self):
