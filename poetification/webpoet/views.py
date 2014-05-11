@@ -26,7 +26,7 @@ def home(request):
 
 def fbauth(request):
     redirect_state = request.GET['redirect_state']
-    redirect_uri = "http://127.0.0.1/complete/facebook/?redirect_state="+redirect_state
+    redirect_uri = "http://rhymingstat.us/complete/facebook/?redirect_state="+redirect_state
     get_access_token = "https://graph.facebook.com/oauth/access_token?client_id="+settings.FACEBOOK_APP_ID+"&redirect_uri="+redirect_uri+"&client_secret="+settings.FACEBOOK_API_SECRET+"&code="+request.GET['code']
     contents = urllib2.urlopen(get_access_token)
     response = contents.read()
@@ -47,7 +47,7 @@ def fbaccess(request):
 
 def twauth(request, redirect_url="/twaccess/"):
     twitter = Twython(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
-    auth = twitter.get_authentication_tokens(callback_url='http://127.0.0.1/twaccess/')
+    auth = twitter.get_authentication_tokens(callback_url='http://rhymingstat.us/twaccess/')
     OAUTH_TOKEN = auth['oauth_token']
     OAUTH_TOKEN_SECRET = auth['oauth_token_secret']
     request.session['oauth_token'] = OAUTH_TOKEN
