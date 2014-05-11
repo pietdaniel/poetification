@@ -49,8 +49,7 @@ Set up a site-enabled config:
 ```
 server {
     listen 80;
-    server_name http://54.187.186.133/;
-    # server_name httpL//rhymingstat.us/;
+    server_name http://example.com/;
     access_log /var/log/nginx/poetification.access.log;
     error_log /var/log/nginx/poetification.error.log;
 
@@ -69,6 +68,17 @@ server {
 If all went well start up fcgi
 ```
 python ./manage.py runfcgi host=127.0.0.1 port=8080
+```
+Some enviroment variable will need to be set, they are keyed as follows:
+```
+export P_APP_KEY='#{twitter_app_key}'
+export P_APP_SECRET='#{twitter_app_secret}'
+export P_OAUTH_TOKEN='#{twitter_oauth_token}'
+export P_OAUTH_SECRET='#{twitter_oauth_secert}'
+export FACEBOOK_APP_ID='#{facebook_app_id}'
+export FACEBOOK_API_SECRET='#{facebook_api_secret}'
+export GITHUB_APP_ID='#{github_app_id}'
+export GITHUB_API_SECRET='#{github_api_secret}'
 ```
 and run the server
 ```
