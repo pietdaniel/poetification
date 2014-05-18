@@ -104,7 +104,6 @@ class Limerick(Poem):
                     if (ele.syllables > 4 and ele.syllables < 8):
                         n.append(ele.text)
 
-
         if (len(m)+len(n)) < 5:
             return #Not a poem!
 
