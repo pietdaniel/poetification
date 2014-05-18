@@ -4,35 +4,27 @@ import urllib, json
 from lineutils import *
 from nltk_contrib.readability import syllables_en as SE
 from collections import defaultdict
-# from syllable import *
 from poemtypes import *
 
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
         self.lines = filter(lambda x: bool(x), self.lines)
-        
         self.fhash = None
 
     @staticmethod
     def fromFacebookFeed(feed):
-        # postlist = PostList([msg['message'] for msg in feed])
-        # return postlist
         feeddata = []
-        # print feed
         try:
             feeddata = feed['paging']['data']
         except:
-            # print "error"
             feeddata = feed['data']
         finally:
             postlist = []
             for msg in feeddata:
                 try:
-                    # print msg['message']
                     postlist.append(msg['message'])
                 except: continue
-                
             return PostList(postlist)
 
     @staticmethod
@@ -66,14 +58,8 @@ class Line(models.Model):
         else:
             return None
 
-            
     def nsyl(self, word):
         return SE.count(word)
-        # word = RhymeWord.findWord(word)
-        # if not word:
-        #     return 0
-        # else:
-        #     return word.syllables
     
     @property
     def syllables(self):
@@ -103,7 +89,6 @@ class RhymeWord(models.Model):
     class Meta:
         unique_together = ['word', 'syllables', 'rhyme_phoneme']
 
-
     @staticmethod
     def findWord(word):
         rw = None
@@ -126,4 +111,9 @@ class RhymeWord(models.Model):
                 rw.save()
         finally:
             return rw
-            
+
+
+
+
+
+
