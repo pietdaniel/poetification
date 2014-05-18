@@ -2,17 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 import urllib, json
 from lineutils import *
-from nltk_contrib.readability import syllables_en as SE 
+from nltk_contrib.readability import syllables_en as SE
 from collections import defaultdict
 # from syllable import *
 from poemtypes import *
+
 class PostList(models.Model):
     def __init__(self, phrases):
         self.lines = [Line.get_line(p) for p in phrases]
         self.lines = filter(lambda x: bool(x), self.lines)
         
         self.fhash = None
-
 
     @staticmethod
     def fromFacebookFeed(feed):
@@ -49,9 +49,6 @@ class PostList(models.Model):
             self.fhash = d
         return self.fhash
 
-    # @property
-    # def cardinality_sets(self):
-    #     for l in self.lines
 
 class Line(models.Model):
     def __init__(self, phrase):
